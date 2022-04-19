@@ -1,0 +1,12 @@
+\section{Strategia risolutiva ed Architettura generale proposta}
+Per ognuno dei punti della specifica sono stati individuati i seguenti approcci:
+\begin{enumerate}
+    \item \textit{Realizzare una libreria con API asincrona utile per recuperare e monitorare informazioni circa treni in viaggio, a partire dall'uso di web API già disponibili in rete:}
+
+    \noindent \textbf{Soluzione:} Alcune delle web API utilizzate non restituiscono un risultato nel classico formato JSON. Il risultato viene infatti riportato in formato HTML. È quindi stato necessario estrapolare le informazioni utilizzando la tecnica "web scraping". La libreria creata è composta da tre componenti, uno per ognuna delle route principali. Ognuno di questi componenti si occupa di effettuare la richiesta all'API esterna e di convertire il risultato nel formato desiderato (eliminando campi non utili e/o facendo scraping se necessario).
+    \item \textit{Sviluppare un programma che, usando la libreria sviluppata al punto 1), dato un certo specifico viaggio, permetta di monitorare lo stato dei treni coinvolti, segnalando a che ora è partito/arrivato il treno nelle varie stazioni da cui è partito/a cui è arrivato ed eventualmente possibili ritardi. Il programma deve fornire una opportuna GUI per identificare/selezionare il viaggio, far partire ed eventualmente bloccare il monitoraggio, e - dato un monitoraggio attivo - visualizzare nella forma che si ritiene più opportuna l’output del monitoraggio:}
+
+   \noindent \textbf{Soluzione:} Si è scelto di suddividere il programma in due parti. Nello specifico esiste un componente di tipo server ed un componente di tipo client.\newline In questo modo è possibile ottenere una separazione più corretta delle responsabilità, permettendo anche l'esistenza di più di un client.\newline
+   Il server si occupa di mettere a disposizione delle API che recuperino, attraverso la libreria sviluppata al punto precedente, le informazioni su soluzioni, stato dei treni e delle stazioni da API esterne.\newline
+   Il client può quindi effettuare richieste al server per ottenere in dati e visualizzarli attraverso una GUI.
+\end{enumerate}

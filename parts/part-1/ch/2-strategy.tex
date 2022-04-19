@@ -1,0 +1,19 @@
+\section{Strategia risolutiva e Architettura proposta}
+Per risolvere il problema è stato utilizzato il framework fornito da java.util.concurrent, che mette a disposizione un \textbf{ExecutorService}; tale interfaccia espone delle API per eseguire computazioni concorrenti in modo standardizzato così da non dover ricorrere a meccanismi di basso livello.\newline
+Tramite la factory \textit{Executors} è possibile creare istanze di vari ExecutorService. Nel caso in esame è stato utilizzato un FixedThreadPool con un numero di thread pari al numero di processori presenti sulla macchina che esegue il programma.
+\subsection{Decomposizione in Task}
+Nella soluzione scelta è stato individuato un unico Task:
+\begin{itemize}
+    \item \textbf{ComputeDocumentTask} \newline
+    Questo task si occupa di caricare in memoria centrale un documento. Una volta estrapolato il contenuto come stringa si occupa di analizzare le singole parole. I risultati parziali del conteggio verranno salvati in una struttura dati locale, la quale verrà restituita dal task come risultato.
+\end{itemize}
+
+\noindent I ComputeDocumentTask estendono l'interfaccia \textbf{Callable}. L'ExecutorService si occupa di eseguire il metodo \textit{call} di ogni Callable che gli viene fornito, ovvero uno per ogni documento che dovrà essere computato. L'ExecutorService non accetterà poi più nuovi task da eseguire e si metterà in attesa che quelli in esecuzione terminino.\newline
+Infine, il risultato di ogni ComputeDocumentTask viene utilizzato per aggiornare la struttura dati centrale, che fornisce il risultato finale della computazione.\newline
+
+\noindent Ogni ComputeDocumentTask opera in maniera indipendente rispetto agli altri per tutta la durata del suo ciclo di vita. Al termine dell'esecuzione di tutti i task, le strutture dati vengono unite in modo sequenziale, non richiedendo alcun meccanismo di sincronizzazione.\newline
+
+\noindent La GUI permette all'utente di avviare la computazione e di fermarla in qualunque momento; per fermare l'ExecutorService è sufficiente utilizzare il metodo \textit{shutdownNow()}, il quale termina nel più breve tempo possibile l'esecuzione di tutti i task.\newline
+
+% Descrizione della strategia risolutiva e dell’architettura proposta, sempre
+% focalizzando l’attenzione su aspetti relativi alla concorrenza.

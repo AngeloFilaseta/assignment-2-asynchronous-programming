@@ -1,0 +1,17 @@
+\section{Strategia risolutiva e Architettura proposta}
+
+La programmazione reattiva è un paradigma che si incentra principalmente sui flussi di dati e sui loro cambiamenti; ha come obiettivo quello di permettere una gestione agevole degli stream di dati asincroni e di eventi.\newline
+L'estensione della programmazione reattiva è stata ormai introdotta per tutti i linguaggi principali.\newline
+
+\noindent Nella soluzione proposta è stato utilizzato RxJava, estensione di Java che permette di usufruire di questo paradigma.\newline
+
+\begin{figure}[H]
+    \caption{Logo di RxJava}
+    \centering
+    \includegraphics[width=80mm]{img/rx_logo.png}
+    \label{fig:rx_logo}
+\end{figure}
+
+\noindent L'elemento principale della programmazione reattiva è costituito dagli \textbf{Observable}, che permettono di creare e manipolare stream di dati in modo asincrono.\newline
+Nel nostro caso viene fornito all'Observable la lista dei nomi dei documenti e per ognuno di essi viene creato il file e viene elaborato al fine di restituire una struttura dati che contiene tutte le parole trovate nel documento e il rispettivo numero di occorrenze.\newline
+La subscribe permette di andare a definire il comportamento finale per ogni elemento computato: nella soluzione proposta, la subscribe si occupa di unire le strutture dati di ogni documento in una struttura finale. Una volta completate tutte le computazioni relative ai documenti, la struttura finale è completamente aggiornata e fornita all'utente.
